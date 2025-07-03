@@ -1,14 +1,20 @@
 <?php
 
 namespace App\Services\TypesService;
-use App\Repositories\TypesRepository\TypesRepositoryInterface;
+use App\Repositories\TypesRepositoryInterface;
 
 class TypesService implements TypesServiceInterface
 {
-    public function __construct(TypesRepositoryInterface $typesRepositoryInterface) {}
+    /**
+     * @param TypesRepositoryInterface $typesRepository
+     */
+    public function __construct(private TypesRepositoryInterface $typesRepository) {}
 
+    /**
+     * @return array
+     */
     public function getAllTypes(): array
     {
-         
+        return $this->typesRepository->getAllTypes();
     }
 }

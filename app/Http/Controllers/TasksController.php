@@ -4,63 +4,92 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\TasksService\TasksServiceInterface;
+use App\DTO\Tasks\CreateTaskDTO;
 
 class TasksController extends Controller
 {
-    public function __construct(TasksServiceInterface $tasksServiceInterface) {}
     /**
-     * @return array
+     * @param TasksServiceInterface $tasksService
      */
-    public function index(): array
+    public function __construct(private TasksServiceInterface $tasksService)
     {
-        return Task::all()->toArray();
     }
 
     /**
-     * Show the form for creating a new resource.
+     * @param Request $request
+     * @return object|\Illuminate\Http\JsonResponse
      */
-    public function create()
+    public function index(Request $request): object
     {
-        //
+        $data = $this->tasksService->getTasks($request->only(['id', 'title']));
+
+        return response()->json(['data' => $data], 200);
+
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @param Request $request
+     * @return object
      */
-    public function store(Request $request)
+    public function store(Request $request): object
     {
-        //
+        $taskDTO = CreateTaskDTO::from($request->only(
+            [
+                'title',
+                'description',
+                'extra_data',
+                'due_date',
+                'category_id',
+                'type_id',
+            ])
+        );
+        $response = $this->tasksService->createTask($taskDTO);
+
+        return response()->json(['data' => $response], 200);
     }
 
     /**
-     * Display the specified resource.
+     * @param string $id
+     * @return object|\Illuminate\Http\JsonResponse
      */
-    public function show(string $id)
+    public function show(string $id): object
     {
-        //
+        $data = $this->tasksService->getTask((int)$id);
+
+        return response()->json(['data' => $data], 200);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * @param Request $request
+     * @return object|\Illuminate\Http\JsonResponse
      */
-    public function edit(string $id)
+    public function edit(Request $request): object
     {
-        //
+        $taskDTO = CreateTaskDTO::from($request->only(
+            [
+                'id',
+                'title',
+                'description',
+                'extra_data',
+                'task_status',
+                'due_date',
+                'category_id',
+                'type_id',
+            ])
+        );
+        $response = $this->tasksService->editTask($taskDTO);
+
+        return response()->json(['data' => $response], 200);
     }
 
     /**
-     * Update the specified resource in storage.
+     * @param string $id
+     * @return object|\Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, string $id)
+    public function destroy(string $id): object
     {
-        //
-    }
+        $this->tasksService->destroy((int)$id);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return response()->json(['message' => 'success'], 200);
     }
 }

@@ -2,18 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Services\TypesService\TypesServiceInterface;
 
 class TypesController extends Controller
 {
-    public function __construct(TypesServiceInterface $typesServiceInterface) {}
+    /**
+     * @param TypesServiceInterface $typesService
+     */
+    public function __construct(private TypesServiceInterface $typesService)
+    {
+    }
 
     /**
-     * Handle the incoming request.
+     * @return object|\Illuminate\Http\JsonResponse
      */
-    public function __invoke(Request $request)
+    public function index(): object
     {
-        //
+        $data = $this->typesService->getAllTypes();
+
+        return response()->json(['data' => $data], 200);
     }
 }

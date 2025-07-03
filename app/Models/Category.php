@@ -12,7 +12,7 @@ class Category extends Model
     use HasFactory;
 
     /**
-     * The tasks that belong to the category.
+     * @return BelongsToMany
      */
     public function tasks(): BelongsToMany
     {

@@ -12,7 +12,7 @@ class Type extends Model
     use HasFactory;
 
     /**
-     * The tasks that belong to the type.
+     * @return BelongsToMany
      */
     public function tasks(): BelongsToMany
     {

@@ -12,7 +12,7 @@ class Task extends Model
     use HasFactory;
 
     /**
-     * The categories that belong to the task.
+     * @return BelongsToMany
      */
     public function categories(): BelongsToMany
     {
@@ -20,7 +20,7 @@ class Task extends Model
     }
 
     /**
-     * The types that belong to the task.
+     * @return BelongsToMany
      */
     public function types(): BelongsToMany
     {

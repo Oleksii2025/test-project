@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('description');
             $table->jsonb('extra_data');
             $table->boolean('task_status');
-            $table->date('due_date')->nullable;
+            $table->date('due_date');
             $table->timestamps();
         });
     }

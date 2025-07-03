@@ -84,7 +84,7 @@ export default {
         };
     },
     mounted() {
-        this.checkTocken();
+        this.checkToken();
     },
     methods: {
         async register() {
@@ -97,22 +97,21 @@ export default {
                 });
                 this.loading = false;
                 this.error = false;
-                console.log(response.data);
                 this.$router.push('/login');
             } catch (error) {
                 this.error = true;
                 this.loading = false;
             }
         },
-        async checkTocken() {
+        async checkToken() {
             if(this.$store.state.token !== '') {
                 try {
-                    const response = await axios.post('/api/auth/check-tocken', this.$store.state.token);
+                    const response = await axios.post('/api/auth/check-token', this.$store.state.token);
                     this.loading = false;
                     this.$router.push('/dashboard');
                 } catch (error) {
                     this.loading = false;
-                    this.$store.commit('clearTocken');
+                    this.$store.commit('clearToken');
                 }
             } else {
                 this.loading = false;

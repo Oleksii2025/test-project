@@ -2,10 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
 
 class TaskTypeSeeder extends Seeder
 {
@@ -17,6 +15,9 @@ class TaskTypeSeeder extends Seeder
         DB::table('task_type')->insert(self::makeData());
     }
 
+    /**
+     * @return array
+     */
     private static function makeData(): array
     {
         $arr = [];

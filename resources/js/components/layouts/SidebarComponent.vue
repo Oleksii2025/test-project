@@ -2,128 +2,103 @@
     <aside class="hidden w-64 bg-gray-800 sm:block">
         <nav class="text-sm text-gray-300">
             <ul class="flex flex-col">
-                <li class="px-4 py-2 text-xs uppercase tracking-wider text-gray-500 font-bold">Section</li>
-                <router-link v-slot="{ isExactActive, href, navigate }" :to="routes.dashboard" custom>
-                    <li class="px-4 cursor-pointer"
-                        :class="[isExactActive ? 'bg-gray-500 text-gray-800' : 'hover:bg-gray-700']">
-                        <div class="py-3 flex items-center" @click="navigate">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                            </svg>
-                            Dashboard
-                        </div>
-                    </li>
-                </router-link>
-
+                <li class="px-4 py-2 text-xs uppercase tracking-wider text-gray-500 font-bold">Dashboard</li>
                 <li>
-                    <Disclosure v-slot="{ open }" :default-open="isUserManagementActive">
-                        <DisclosureButton class="px-4 py-3 flex items-center w-full hover:bg-gray-700"
-                            :class="open ? 'bg-gray-700' : ''">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                            </svg>
-                            User Management
+                    <Disclosure v-slot="{ open }">
+                        <DisclosureButton class="px-4 py-3 flex items-center w-full hover:bg-gray-700 cursor-pointer"
+                                          :class="open ? 'bg-gray-700' : ''">
+                            Tasks
                             <span class="ml-auto">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor" :class="open ? 'transform rotate-90' : ''">
+                                     stroke="currentColor" :class="open ? 'transform rotate-90' : ''">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 5l7 7-7 7" />
+                                          d="M9 5l7 7-7 7"/>
                                 </svg>
                             </span>
                         </DisclosureButton>
                         <DisclosurePanel>
                             <ul>
                                 <li>
-                                    <Disclosure v-slot="{ open }" :default-open="isUserActive">
+                                    <Disclosure v-slot="{ open }">
                                         <DisclosureButton
-                                            class="pl-8 pr-4 py-3 flex items-center w-full hover:bg-gray-700"
+                                            class="flex items-center w-full hover:bg-gray-700 cursor-pointer"
                                             :class="open ? 'bg-gray-700' : ''">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor"
-                                                viewBox="0 0 16 16">
-                                                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
-                                            </svg>
-                                            Users
+                                            <div class="pl-8 py-3 pr-4" @click="sendData(0, 'list')">Tasks list</div>
+                                        </DisclosureButton>
+                                    </Disclosure>
+                                </li>
+                                <li>
+                                    <Disclosure v-slot="{ open }">
+                                        <DisclosureButton
+                                            class="pl-8 pr-4 py-3 flex items-center w-full hover:bg-gray-700 cursor-pointer"
+                                            :class="open ? 'bg-gray-700' : ''">
+                                            Filter by category
                                             <span class="ml-auto">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                                    viewBox="0 0 24 24" stroke="currentColor"
-                                                    :class="open ? 'transform rotate-90' : ''">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        stroke-width="2" d="M9 5l7 7-7 7" />
-                                                </svg>
-                                            </span>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                                         viewBox="0 0 24 24"
+                                                         stroke="currentColor"
+                                                         :class="open ? 'transform rotate-90' : ''">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                              stroke-width="2"
+                                                              d="M9 5l7 7-7 7"/>
+                                                    </svg>
+                                                </span>
                                         </DisclosureButton>
                                         <DisclosurePanel>
                                             <ul>
-                                                <!-- <router-link :to="routes.listUsersManagement">
-                                                    <li
-                                                            class="pl-12"
-                                                            :class="[isExactActive ? 'bg-gray-500 text-gray-800' : 'hover:bg-gray-700']"
-                                                    >
-                                                        <div class="py-3 flex items-center"
-                                                             @click="navigate">
-                                                            <svg
-                                                                    xmlns="http://www.w3.org/2000/svg"
-                                                                    class="h-5 w-5"
-                                                                    fill="currentColor"
-                                                                    viewBox="0 0 16 16"
-                                                            >
-                                                                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
-                                                            </svg>
-                                                            Users List
+                                                <li>
+                                                    <Disclosure v-slot="{ open }">
+                                                        <div v-for="(category, index) in categories"
+                                                             class="flex items-center w-full hover:bg-gray-700 cursor-pointer"
+                                                             :class="open ? 'bg-gray-700' : ''">
+                                                            <div class="pl-10 pr-4 py-3 w-full"
+                                                                 @click="sendData(category.id, 'category')">
+                                                                {{ category.title }}
+                                                            </div>
                                                         </div>
-                                                    </li>
-                                                </router-link> -->
-                                                Users List
+                                                    </Disclosure>
+                                                </li>
                                             </ul>
                                         </DisclosurePanel>
                                     </Disclosure>
                                 </li>
-                            </ul>
-                        </DisclosurePanel>
-                    </Disclosure>
-                </li>
-                <li>
-                    <Disclosure v-slot="{ open }" :default-open="isUserManagementActive">
-                        <DisclosureButton class="px-4 py-3 flex items-center w-full hover:bg-gray-700"
-                            :class="open ? 'bg-gray-700' : ''">
-                            <i class="fas fa-briefcase mr-2" style="font-size: 20px"></i>
-                            Vacancies
-                            <span class="ml-auto">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor" :class="open ? 'transform rotate-90' : ''">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 5l7 7-7 7" />
-                                </svg>
-                            </span>
-                        </DisclosureButton>
-                        <DisclosurePanel>
-                            <ul>
                                 <li>
-                                    <Disclosure v-slot="{ open }" :default-open="isUserActive">
+                                    <Disclosure v-slot="{ open }">
                                         <DisclosureButton
-                                            class="pl-8 pr-4 py-3 flex items-center w-full hover:bg-gray-700"
+                                            class="pl-8 pr-4 py-3 flex items-center w-full hover:bg-gray-700 cursor-pointer"
                                             :class="open ? 'bg-gray-700' : ''">
-                                            <router-link :to="routes.listVacancies">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
-                                                    fill="currentColor" viewBox="0 0 16 16">
-                                                    <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
-                                                </svg>
-                                                Vacancies list
-                                            </router-link>
+                                            Filter by type
+                                            <span class="ml-auto">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                                         viewBox="0 0 24 24"
+                                                         stroke="currentColor"
+                                                         :class="open ? 'transform rotate-90' : ''">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                              stroke-width="2"
+                                                              d="M9 5l7 7-7 7"/>
+                                                    </svg>
+                                                </span>
                                         </DisclosureButton>
+                                        <DisclosurePanel>
+                                            <ul>
+                                                <li>
+                                                    <Disclosure v-slot="{ open }">
+                                                        <div v-for="(type, index) in types"
+                                                             class="flex items-center w-full hover:bg-gray-700 cursor-pointer"
+                                                             :class="open ? 'bg-gray-700' : ''">
+                                                            <div class="pl-10 pr-4 py-3 w-full"
+                                                                 @click="sendData(type.id, 'type')">{{ type.title }}
+                                                            </div>
+                                                        </div>
+                                                    </Disclosure>
+                                                </li>
+                                            </ul>
+                                        </DisclosurePanel>
                                     </Disclosure>
                                 </li>
-                                <li class="px-8 hover:bg-gray-700">
-                                    <router-link :to="routes.createVacancies">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor"
-                                            viewBox="0 0 16 16">
-                                            <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
-                                        </svg>
-                                        Create Vacancies
+                                <li class="px-8 py-3 hover:bg-gray-700 cursor-pointer">
+                                    <router-link :to="routes.createTask">
+                                        Create Task
                                     </router-link>
                                 </li>
                             </ul>
@@ -132,12 +107,11 @@
                 </li>
                 <li class="px-4 cursor-pointer hover:bg-gray-700">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
+                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                              d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
                     </svg>
                     <div v-on:click="logout">Sign out</div>
-                    <!--          </router-link>-->
                 </li>
             </ul>
         </nav>
@@ -145,12 +119,8 @@
 </template>
 
 <script>
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
-import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
-// import { mapActions, mapGetters } from "vuex";
+import {Disclosure, DisclosureButton, DisclosurePanel} from '@headlessui/vue'
 import axios from "axios";
-// import { sanitizeLink, sanitizeLinks } from "../helpers/XssFunctions/sanitizeUrlFunction";
 
 export default {
     components: {
@@ -158,70 +128,40 @@ export default {
         DisclosureButton,
         DisclosurePanel,
     },
-    props: {
-        // entities: {
-        //     type: Object
-        // }
-    },
     data() {
         return {
-            userName: '',
-            // sanitizeUrl: require("@braintree/sanitize-url").sanitizeUrl,
             routes: {
                 home: '/',
                 dashboard: '/dashboard',
-                listVacancies: '/list-vacancies',
-                createVacancies: '/create-vacancies',
-                listUsersManagement: '/list-users-management',
             },
+            categories: [],
+            types: [],
         }
     },
-
-    setup() {
-        // const route = useRoute()
-
-        // const isUserManagementActive = computed(() => {
-        //     const names = ['user-list', 'user-detail', 'roles', 'permissions']
-
-        //     return names.includes(route.name)
-        // })
-
-        // const isUserActive = computed(() => {
-        //     const names = ['user-list', 'user-detail']
-
-        //     return names.includes(route.name)
-        // })
-
-        // return {
-        //     route,
-        //     isUserManagementActive,
-        //     isUserActive,
-        // }
-    },
     mounted() {
-        // this.getUser();
-        // sanitizeLinks(this.routes);
-    },
-    computed: {
-        // ...mapGetters([
-        //     'ADMIN_USER'
-        // ]),
+        this.getCategories();
+        this.getTypes();
     },
     methods: {
-        // ...mapActions([
-        //     'ADMIN_GET_USER',
-        // ]),
-        // getUser: function () {
-        //     this.ADMIN_GET_USER().then(res => {
-        //         this.userName = this.ADMIN_USER;
-        //     });
-        // },
+        getCategories: function () {
+            axios.get('/api/categories/list', {}).then(res => {
+                this.categories = res.data.data;
+            });
+        },
+        getTypes: function () {
+            axios.get('/api/types/list', {}).then(res => {
+                this.types = res.data.data;
+            });
+        },
         logout: function () {
             axios.post('/api/auth/logout', {}).then(res => {
-                // this.$cookies.remove('user');
-                this.$store.commit('clearTocken');
-                this.$router.push({ name: 'login' });
+                this.$store.commit('clearToken');
+                this.$router.push({name: 'login'});
             });
+        },
+        sendData: function (id, title) {
+            this.$emit('changeData', {'id': id, 'title': title});
+            this.$router.push({name: 'dashboard'});
         }
     }
 }

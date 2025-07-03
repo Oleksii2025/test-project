@@ -67,7 +67,7 @@ export default {
         };
     },
     mounted() {
-        this.checkTocken()
+        this.checkToken()
     },
     methods: {
         async login() {
@@ -76,23 +76,22 @@ export default {
                 const response = await axios.post('/api/auth/login', this.credentials);
                 this.loading = false;
                 this.error = false;
-                this.$store.commit('setTocken', response.data.access_token);
+                this.$store.commit('setToken', response.data.access_token);
                 this.$router.push('/dashboard');
             } catch (error) {
-                console.log(error, 'error');
                 this.error = true;
                 this.loading = false;
             }
         },
-        async checkTocken() {
+        async checkToken() {
             if(this.$store.state.token !== '') {
                 try {
-                    const response = await axios.post('/api/auth/check-tocken', this.$store.state.token);
+                    const response = await axios.post('/api/auth/check-token', this.$store.state.token);
                     this.loading = false;
                     this.$router.push('/dashboard');
                 } catch (error) {
                     this.loading = false;
-                    this.$store.commit('clearTocken');
+                    this.$store.commit('clearToken');
                 }
             } else {
                 this.loading = false;
@@ -101,5 +100,3 @@ export default {
     }
 };
 </script>
-
-<!-- @submit.prevent="$router.push({ name: 'dashboard' }) -->

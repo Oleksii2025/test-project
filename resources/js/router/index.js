@@ -1,8 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '@/pages/Home.vue';
-import LoginComponent from '@/components/auth/LoginComponent.vue';
-import RegisterComponent from '@/components/auth/RegisterComponent.vue';
+import LoginComponent from '@/components/Auth/LoginComponent.vue';
+import RegisterComponent from '@/components/Auth/RegisterComponent.vue';
 import DashboardComponent from '@/components/DashboardComponent.vue';
+import CreateTaskComponent from '@/components/Tasks/CreateTaskComponent.vue';
+import EditTaskComponent from '@/components/Tasks/EditTaskComponent.vue';
 import PageNotFoundComponent from '@/components/PageNotFoundComponent.vue';
 
 const routes = [
@@ -14,44 +16,23 @@ const routes = [
         name: "dashboard",
         component: DashboardComponent,
         children: [
-            // {
-            //     path: "/list-users-management",
-            //     name: "list-users-management",
-            //     component: UsersManagement
-            // },
-            // {
-            //     path: "/edit-users-management/:id",
-            //     name: "EditUsersManagement",
-            //     component: EditUsersManagement
-            // },
-            // {
-            //     path: "/create-vacancies",
-            //     name: "create-vacancies",
-            //     component: CreateVacancies
-            // },
-            // {
-            //     path: "/edit-vacancies/:id",
-            //     name: "edit-vacancies",
-            //     component: EditVacancies
-            // },
-            // {
-            //     path: "/list-vacancies",
-            //     name: "list-vacancies",
-            //     component: ListVacancies,
-            // },
-            // {
-            //     path: '/card',
-            //     name: 'card',
-            //     component: () => import('./components/Card.vue'),
-            // },
-
+            {
+                path: "/create-task",
+                name: "create-task",
+                component: CreateTaskComponent,
+            },
+            {
+                path: "/edit-task/:id",
+                name: "edit-task",
+                component: EditTaskComponent,
+            },
         ]
     },
     { path: "/:pathMatch(.*)*", component: PageNotFoundComponent },
 ];
 
 const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHistory('/'),
     routes,
 });
 
