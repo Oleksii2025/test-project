@@ -16,6 +16,8 @@ class DatabaseSeeder extends Seeder
                 TypeSeeder::class,
                 CategorySeeder::class,
                 TaskSeeder::class,
+                TaskTypeSeeder::class,
+                CategoryTaskSeeder::class,
             ]);
     }
 }
